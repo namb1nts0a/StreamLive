@@ -14,4 +14,9 @@ public class PagesControllers {
     public String admin(){
         return "admin";
     }
+
+    @GetMapping("/users")
+    public String users(){
+        return  "users";
+    }
 }
