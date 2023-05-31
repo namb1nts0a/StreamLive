@@ -2,6 +2,7 @@ package com.StreamLive.stream.controllers;
 
 import com.StreamLive.stream.models.User;
 import com.StreamLive.stream.models.UserRepository;
+import com.StreamLive.stream.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,19 +10,29 @@ import org.springframework.web.bind.annotation.*;
 
 import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
     private final UserRepository userRepository;
+    private final UserService userService;
 
-    public UserController(UserRepository userRepository) {
+    public UserController(UserRepository userRepository, UserService userService) {
         this.userRepository = userRepository;
+        this.userService = userService;
+    }
+
+    private String generateSessionId(){
+        return UUID.randomUUID().toString();
     }
 
     @PostMapping
     public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
-        User createdUser = userRepository.save(user);
+        String sessionId = generateSessionId();
+        user.setSessionId(sessionId);
+
+        User createdUser = userService.createUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
 
