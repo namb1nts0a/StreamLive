@@ -22,10 +22,9 @@ const iceServers = {
 
 const streamConstraints = {audio: true, video: true};
 
-//let socket = io.connect('https://192.168.43.132:8000', {secure: true});
+
 let socket = io.connect("http://localhost:8000");
-//let socket = io.connect('https://70b9-154-126-11-5.ngrok-free.app')
-//const socket = new WebSocket('wss://d8ad-154-126-11-26.ngrok-free.app:8000');
+
 
 
 socket.on('connect', () => {
@@ -64,14 +63,14 @@ function toggleTrack(trackType) {
 }
 
 btnConnect.onclick = () => {
-  if (roomNameInput.value === "") {
+/*  if (roomNameInput.value === "") {
     alert("Room can not be null!");
-  } else {
-    roomName = roomNameInput.value;
-    socket.emit("joinRoom", roomName);
+  } else {*/
+    /*roomName = roomNameInput.value;*/
+    socket.emit("joinRoom");
     divRoomConfig.classList.add("d-none");
     roomDiv.classList.remove("d-none");
-  }
+/*  }*/
 };
 
 const handleSocketEvent = (eventName, callback) => socket.on(eventName,
