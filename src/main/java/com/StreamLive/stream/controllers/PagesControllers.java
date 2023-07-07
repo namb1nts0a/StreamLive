@@ -2,6 +2,7 @@ package com.StreamLive.stream.controllers;
 
 import com.StreamLive.stream.models.User;
 import com.StreamLive.stream.models.UserRepository;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,8 +39,14 @@ public class PagesControllers {
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam String username, @RequestParam String password){
+    public String login(@RequestParam String username, @RequestParam String password, HttpSession httpSession){
         if (isValidCredentials(username, password)){
+            User user = userRepository.findByUsername(username).orElse(null);
+            if(user != null){
+                String sessionId = user.getSessionId();
+                httpSession.setAttribute("sessionId", sessionId);
+
+            }
             System.out.println("Connexion login");
             return "redirect:/";
         }else{

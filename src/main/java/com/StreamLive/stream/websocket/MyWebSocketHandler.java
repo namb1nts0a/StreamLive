@@ -6,8 +6,11 @@ import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.annotation.OnConnect;
 import com.corundumstudio.socketio.annotation.OnDisconnect;
 import com.corundumstudio.socketio.annotation.OnEvent;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.json.JSONParser;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -32,8 +35,12 @@ public class MyWebSocketHandler {
 
     @OnConnect
     public void onConnect(SocketIOClient client){
-        System.out.println("Client connected: "+client.getSessionId());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String sessionId = authentication.getName();
+        client.set("sessionId", sessionId);
+        System.out.println("Client connected: "+sessionId);
         String clientId = client.getSessionId().toString();
+        System.out.println("Client connected:: "+clientId);
         users.put(clientId, null);
     }
 
