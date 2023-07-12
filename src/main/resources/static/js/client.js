@@ -24,6 +24,7 @@ const streamConstraints = {audio: true, video: true};
 
 
 let socket = io.connect("http://localhost:8000");
+//let socket = io.connect("https://192.168.43.132:8000");
 
 
 

@@ -20,6 +20,11 @@ public class PagesControllers {
     }
     @GetMapping("/")
     public String home(){
+        return "page_accueil";
+    }
+
+    @GetMapping("/accueil")
+    public String accueil(){
         return "index";
     }
 
@@ -48,7 +53,7 @@ public class PagesControllers {
 
             }
             System.out.println("Connexion login");
-            return "redirect:/";
+            return "redirect:/accueil";
         }else{
             System.out.println("Connexion error");
             return "login";
