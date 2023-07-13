@@ -28,6 +28,11 @@ public class PagesControllers {
         return "index";
     }
 
+    @GetMapping("/warning")
+    public String warning(){
+        return "warning";
+    }
+
     @GetMapping("/admin")
     public String admin(){
         return "admin";
@@ -53,7 +58,7 @@ public class PagesControllers {
 
             }
             System.out.println("Connexion login");
-            return "redirect:/accueil";
+            return "redirect:/warning";
         }else{
             System.out.println("Connexion error");
             return "login";
