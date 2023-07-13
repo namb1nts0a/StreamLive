@@ -58,7 +58,7 @@ public class UserController {
         User createdUser = userService.createUser(user);
 
         // Redirige vers une page de confirmation ou une autre page appropriée
-        return "redirect:/users/" + createdUser.getId();
+        return "redirect:/login";
     }
 
 

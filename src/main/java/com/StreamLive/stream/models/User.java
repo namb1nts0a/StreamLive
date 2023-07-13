@@ -14,7 +14,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     @NotEmpty(message = "Le nom d'utilisateur ne peut pas être vide")
     private String username;
     @Column(nullable = false)
