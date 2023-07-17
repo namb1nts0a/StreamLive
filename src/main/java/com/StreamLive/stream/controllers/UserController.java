@@ -62,7 +62,7 @@ public class UserController {
     }
 
 
-    @GetMapping("/{id}")
+    @GetMapping("/profil/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) throws UserPrincipalNotFoundException {
         Optional<User> optionalUser = userRepository.findById(id);
         if(optionalUser.isPresent()){
@@ -72,20 +72,30 @@ public class UserController {
             throw new UserPrincipalNotFoundException("Utilisateur non trouve avec l'id : "+ id);
         }
     }
-//
-//    @PutMapping("/{id}")
-//    public ResponseEntity<User> updateUser(@PathVariable Long id, @Valid @RequestBody User updatedUser) {
-//        Optional<User> optionalUser = userRepository.findById(id);
-//        if (optionalUser.isPresent()) {
-//            User user = optionalUser.get();
-//            user.setUsername(updatedUser.getUsername());
-//            // Met à jour les autres champs si nécessaire
-//            User savedUser = userRepository.save(user);
-//            return ResponseEntity.ok(savedUser);
-//        } else {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
+
+    @GetMapping("/profil/")
+    public String profil(){
+        return "profil";
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User updatedUser) throws UserPrincipalNotFoundException{
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            // Mettez à jour les attributs de l'utilisateur avec les valeurs fournies
+            user.setUsername(updatedUser.getUsername());
+            user.setEmail(updatedUser.getEmail());
+            user.setPassword(updatedUser.getPassword());
+            // ... mettre à jour d'autres attributs selon vos besoins
+
+            User savedUser = userRepository.save(user);
+            return ResponseEntity.ok(savedUser);
+        } else {
+            throw new UserPrincipalNotFoundException("Utilisateur non trouvé avec l'id : " + id);
+        }
+    }
+
 //
 //    @DeleteMapping("/{id}")
 //    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
