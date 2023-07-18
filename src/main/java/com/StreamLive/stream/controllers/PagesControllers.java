@@ -48,6 +48,11 @@ public class PagesControllers {
         return "login";
     }
 
+    @GetMapping("/apropos")
+    public String apropos(){
+        return "apropos";
+    }
+
     @PostMapping("/login")
     public String login(@RequestParam String username, @RequestParam String password, HttpSession httpSession){
         if (isValidCredentials(username, password)){
